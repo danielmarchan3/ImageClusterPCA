@@ -1,6 +1,5 @@
 
 # utils/io.py
-from image_processing import preprocess_image
 import mrcfile
 import os
 
@@ -26,9 +25,9 @@ def read_list_from_txt(filename):
 
     return data_list
 
-def load_and_preprocess_images_from_mrcs(mrcs_file_path, txt_ids_path=None, target_size=(128, 128)):
+
+def load_images_from_mrcs(mrcs_file_path, txt_ids_path=None):
     """Load images from the specified .mrcs file and preprocess them, returning image names and preprocessed images."""
-    images = []
     image_names = []
 
     if os.path.exists(txt_ids_path):
@@ -38,16 +37,4 @@ def load_and_preprocess_images_from_mrcs(mrcs_file_path, txt_ids_path=None, targ
         # Read the data (it's a stack of 2D images)
         img_stack = mrc.data
 
-        # Iterate over each 2D image in the stack
-        for idx, img in enumerate(img_stack):
-            # Preprocess the image (resize, normalize, etc.)
-            preprocessed_image = preprocess_image(img, target_size=target_size)
-            # Append the preprocessed image to the list
-            images.append(preprocessed_image)
-
-            if not os.path.exists(txt_ids_path):
-                # Create a name for each image based on index or a naming convention
-                filename = f"image_{idx + 1}"  # You can modify this as needed
-                image_names.append(filename)
-
-    return images, image_names
+    return img_stack, image_names

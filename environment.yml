@@ -1,6 +1,5 @@
 name: clustering-images-pca
 channels:
-  - anaconda
   - defaults
   - conda-forge
 dependencies:
@@ -11,6 +10,7 @@ dependencies:
   - matplotlib
   - mrcfile
   - scikit-image
+  - tsne
   - pip
   - pip:
       - multiprocess

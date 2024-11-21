@@ -1,6 +1,7 @@
 # utils/image_processing.py
 from multiprocessing import Pool, cpu_count
 import numpy as np
+import os
 from scipy.ndimage import gaussian_filter, zoom, rotate, shift, affine_transform
 from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.decomposition import PCA
@@ -54,6 +55,24 @@ def preprocess_image(image, target_size=(128, 128), apply_gaussian=True):
     normalized_image = z_normalize(downsampled_image)
 
     return normalized_image
+
+
+def preprocess_image_stack(img_stack, image_names, target_size=(128, 128)):
+    images = []
+    text_ids = True if image_names else False
+    # Iterate over each 2D image in the stack
+    for idx, img in enumerate(img_stack):
+        # Preprocess the image (resize, normalize, etc.)
+        preprocessed_image = preprocess_image(img, target_size=target_size)
+        # Append the preprocessed image to the list
+        images.append(preprocessed_image)
+
+        if not text_ids:
+            # Create a name for each image based on index or a naming convention
+            filename = f"image_{idx + 1}"  # You can modify this as needed
+            image_names.append(filename)
+
+    return images, image_names
 
 
 def compute_ssim(img1, img2):
