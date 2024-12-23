@@ -27,7 +27,7 @@ Once the environment is set up, run the program with:
 
 Options:
 
-    -i, --input          Path to the input .mrcs file containing images (required). \n
+    -i, --input          Path to the input .mrcs file containing images (required).
     -o, --output         Directory to save results (required).
     -m, --min-clusters   Minimum number of clusters (default: 10).
     -M, --max-clusters   Maximum number of clusters (default: 30).
